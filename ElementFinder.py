@@ -24,8 +24,13 @@ class ElementFinderCommand(sublime_plugin.WindowCommand):
 
 	def handle_threading(self):
 		if self.thread.complete == True:
-			print "Thread finished!"
-			self.window.show_quick_panel(self.thread.files, None)
+			output = "Found " + str(self.thread.total_matches) + " matches in " + str(self.thread.files_with_matches) + " files:\n"
+			for file in self.thread.files:
+				output += file + "\n"
+
+			results_view = self.window.new_file()
+			edit = results_view.begin_edit()
+			results_view.insert(edit, results_view.size(), output)
 		else:
 			sublime.set_timeout(self.handle_threading, 100)
 
@@ -70,17 +75,19 @@ class CommandLineInterface(threading.Thread):
 	def processLine(self, line):
 
 		try:
-			jsonLine = json.loads(line)
+			json_line = json.loads(line)
 		except ValueError:
 			sublime.error_message("Invalid response from elfinder: " + line)
 			return
 
-		if "status" in jsonLine:
-			if jsonLine["status"] == "foundMatch":
-				self.files.append(jsonLine["file"])
-			elif jsonLine["status"] == "complete":
+		if "status" in json_line:
+			if json_line["status"] == "foundMatch":
+				self.files.append(json_line["file"])
+			elif json_line["status"] == "complete":
 				self.complete = True
+				self.total_matches = json_line["totalMatches"]
+				self.files_with_matches = json_line["numberOfFilesWithMatches"]
 			else:
-				print "Status: " + jsonLine["status"]
+				print "Status: " + json_line["status"]
 
 
