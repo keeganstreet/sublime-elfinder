@@ -1,0 +1,4 @@
+{
+	// Location of NodeJS
+	"node_path" : "/usr/local/bin/node"
+}

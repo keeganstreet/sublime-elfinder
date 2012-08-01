@@ -1,0 +1,7 @@
+[
+	{
+		"command": "element_finder",
+		"caption": "Find Selector in Files...",
+		"args": {"paths": []}
+	}
+]
