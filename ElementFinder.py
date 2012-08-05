@@ -23,33 +23,45 @@ class ElementFinderCommand(sublime_plugin.WindowCommand):
 	# This method runs after the user enters a CSS Selector
 	def on_css_selector_entered(self, selector):
 
+		# Create an output buffer
+		self.output_view = self.window.new_file()
+		self.output_view.set_name("Element Finder Results")
+		self.output_view.set_scratch(True)
+		self.output_view.set_syntax_file("Packages/ElementFinder/Element Finder Results.tmLanguage")
+		self.output_view.settings().set("result_file_regex", "^([^ ].*) \([0-9]+ match(?:es)?\)$")
+
 		# Create a thread so that calling the command line app doesn't lock up the interface
 		self.thread = CommandLineInterface(self.paths, selector, sublime.load_settings("elfinder.sublime-settings").get("node_path"))
 		self.thread.start()
 		self.handle_threading()
 
-	def handle_threading(self):
-		if self.thread.complete == True:
-			output = "Found " + str(self.thread.total_matches) + " matches in " + str(self.thread.files_with_matches) + " files.\n\n"
-			for file in self.thread.files:
-				output += file["file"] + " (" + self.pluralise(file["matches"], "match", "matches") + ")\n\n"
+	def print_line(self, output):
+		edit = self.output_view.begin_edit()
+		self.output_view.insert(edit, self.output_view.size(), output)
+		self.output_view.end_edit(edit)
 
-			results_view = self.window.new_file()
-			results_view.set_name("Element Finder Results")
-			results_view.set_scratch(True)
-			results_view.set_syntax_file("Packages/ElementFinder/Element Finder Results.tmLanguage")
-			results_view.settings().set("result_file_regex", "^([^ ].*) \([0-9]+ match(?:es)?\)$")
-			edit = results_view.begin_edit()
-			results_view.insert(edit, results_view.size(), output)
-			results_view.end_edit(edit)
-		else:
+	def handle_threading(self):
+		while (len(self.thread.responses) > 0):
+			json_line = self.thread.responses.pop(0)
+
+			if "status" in json_line:
+				if json_line["status"] == "countedFiles":
+					self.print_line(json_line["message"] + "\n\n")
+				elif json_line["status"] == "foundMatch":
+					self.print_line(json_line["file"] + " (" + self.pluralise(json_line["matches"], "match", "matches") + ")\n\n")
+				elif json_line["status"] == "complete":
+					self.print_line(json_line["message"] + "\n\n")
+				else:
+					print "Status: " + json_line["status"]
+
+		if self.thread.complete != True:
 			sublime.set_timeout(self.handle_threading, 100)
 
 
 class CommandLineInterface(threading.Thread):
 
 	def __init__(self, paths, selector, node):
-		self.files = []
+		self.responses = []
 		self.complete = False
 		self.paths = paths
 		self.selector = selector
@@ -60,7 +72,7 @@ class CommandLineInterface(threading.Thread):
 
 		# Create a Subprocess to call the command line app
 		# http://docs.python.org/library/subprocess.html#subprocess.Popen
-		sp = subprocess.Popen(
+		self.sp = subprocess.Popen(
 			[
 				self.node,
 				sublime.packages_path() + "/ElementFinder/lib/elfinder/element-finder.js",
@@ -74,13 +86,14 @@ class CommandLineInterface(threading.Thread):
 			cwd = self.paths[0])
 
 		# Poll process for new output until finished
-		for line in iter(sp.stdout.readline, ""):
+		for line in iter(self.sp.stdout.readline, ""):
 			self.processLine(line)
 
-		for err in iter(sp.stderr.readline, ""):
+		for err in iter(self.sp.stderr.readline, ""):
 			self.processLine(err)
+			self.sp.terminate()
 
-		sp.wait()
+		self.sp.wait()
 
 	# Process the JSON response from elfinder
 	def processLine(self, line):
@@ -88,17 +101,13 @@ class CommandLineInterface(threading.Thread):
 		try:
 			json_line = json.loads(line)
 		except ValueError:
+			self.sp.terminate()
+			self.complete = True
 			sublime.error_message("Invalid response from elfinder: " + line)
 			return
 
+		self.responses.append(json_line)
+
 		if "status" in json_line:
-			if json_line["status"] == "foundMatch":
-				self.files.append(json_line)
-			elif json_line["status"] == "complete":
+			if json_line["status"] == "complete":
 				self.complete = True
-				self.total_matches = json_line["totalMatches"]
-				self.files_with_matches = json_line["numberOfFilesWithMatches"]
-			else:
-				print "Status: " + json_line["status"]
-
-
