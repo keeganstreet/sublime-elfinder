@@ -109,10 +109,11 @@ class CommandLineInterface(threading.Thread):
 		try:
 			json_line = json.loads(line)
 		except ValueError:
-			self.sp.terminate()
-			self.complete = True
-			sublime.error_message("Invalid response from elfinder: " + line)
-			return
+			if (len(line.strip()) > 0):
+				self.sp.terminate()
+				self.complete = True
+				sublime.error_message("Invalid response from elfinder CLI: " + line)
+				return
 
 		self.responses.append(json_line)
 
