@@ -40,13 +40,19 @@ class ElementFinderCommand(sublime_plugin.WindowCommand):
 		self.output_view.insert(edit, self.output_view.size(), output)
 		self.output_view.end_edit(edit)
 
+	def update_status(self, filesProcessed, totalFiles):
+		self.output_view.set_status('element_finder', 'Element Finder is searching... (%s/%s files)' % (filesProcessed, totalFiles))
+
 	def handle_threading(self):
 		while (len(self.thread.responses) > 0):
 			json_line = self.thread.responses.pop(0)
 
 			if "status" in json_line:
 				if json_line["status"] == "countedFiles":
+					self.update_status(0, json_line["numberOfFiles"])
 					self.print_line(json_line["message"] + "\n\n")
+				elif json_line["status"] == "processingFile":
+					self.update_status(json_line["fileNumber"], json_line["numberOfFiles"])
 				elif json_line["status"] == "foundMatch":
 					self.print_line(json_line["file"] + " (" + self.pluralise(json_line["matches"], "match", "matches") + ")\n\n")
 				elif json_line["status"] == "complete":
@@ -54,7 +60,9 @@ class ElementFinderCommand(sublime_plugin.WindowCommand):
 				else:
 					print "Status: " + json_line["status"]
 
-		if self.thread.complete != True:
+		if self.thread.complete == True:
+			self.output_view.erase_status('element_finder')
+		else:
 			sublime.set_timeout(self.handle_threading, 100)
 
 
