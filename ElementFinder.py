@@ -51,10 +51,18 @@ class ElementFinderCommand(sublime_plugin.WindowCommand):
 				if json_line["status"] == "countedFiles":
 					self.update_status(0, json_line["numberOfFiles"])
 					self.print_line(json_line["message"] + "\n\n")
+					self.print_line("Tip: to fold all result summaries, press Command K 1\n\n")
 				elif json_line["status"] == "processingFile":
 					self.update_status(json_line["fileNumber"], json_line["numberOfFiles"])
 				elif json_line["status"] == "foundMatch":
-					self.print_line(json_line["file"] + " (" + self.pluralise(json_line["matches"], "match", "matches") + ")\n\n")
+					output = json_line["file"] + " (" + self.pluralise(json_line["matches"], "match", "matches") + ")\n\n"
+					match_number = 1
+					for match_detail in json_line["matchesDetails"]:
+						output += "    " + str(match_number).ljust(4, " ") + match_detail.replace("\n", "\n        ") + "\n"
+						if (match_number == json_line["matches"]):
+							output += "\n"
+						match_number += 1
+					self.print_line(output)
 				elif json_line["status"] == "complete":
 					self.print_line(json_line["message"] + "\n\n")
 				else:

@@ -19,6 +19,18 @@
 				</dict>
 			</dict>
 		</dict>
+		<dict>
+			<key>match</key>
+			<string>^ +([0-9]+) </string>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>constant.numeric.line-number.find-in-files</string>
+				</dict>
+			</dict>
+		</dict>
 	</array>
 	<key>scopeName</key>
 	<string>text.find-in-files</string>
