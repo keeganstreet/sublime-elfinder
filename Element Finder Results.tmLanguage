@@ -27,7 +27,7 @@
 				<key>1</key>
 				<dict>
 					<key>name</key>
-					<string>constant.numeric.line-number.find-in-files</string>
+					<string>constant.numeric.match-number.element-finder</string>
 				</dict>
 			</dict>
 		</dict>
