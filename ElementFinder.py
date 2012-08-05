@@ -37,6 +37,7 @@ class ElementFinderCommand(sublime_plugin.WindowCommand):
 			results_view = self.window.new_file()
 			results_view.set_name("Element Finder Results")
 			results_view.set_syntax_file("Packages/ElementFinder/Element Finder Results.tmLanguage")
+			results_view.settings().set("result_file_regex", "^([^ ].*) \([0-9]+ match(?:es)?\)$")
 			edit = results_view.begin_edit()
 			results_view.insert(edit, results_view.size(), output)
 			results_view.end_edit(edit)
