@@ -14,6 +14,12 @@ class ElementFinderCommand(sublime_plugin.WindowCommand):
 		# Ask the user what CSS Selector they want to search for
 		self.window.show_input_panel("Find CSS Selector:", "", self.on_css_selector_entered, None, None)
 
+	def pluralise(self, number, singular, plural):
+		if number == 1:
+			return str(number) + " " + singular
+		else:
+			return str(number) + " " + plural
+
 	# This method runs after the user enters a CSS Selector
 	def on_css_selector_entered(self, selector):
 
@@ -24,13 +30,16 @@ class ElementFinderCommand(sublime_plugin.WindowCommand):
 
 	def handle_threading(self):
 		if self.thread.complete == True:
-			output = "Found " + str(self.thread.total_matches) + " matches in " + str(self.thread.files_with_matches) + " files:\n"
+			output = "Found " + str(self.thread.total_matches) + " matches in " + str(self.thread.files_with_matches) + " files.\n\n"
 			for file in self.thread.files:
-				output += file + "\n"
+				output += file["file"] + " (" + self.pluralise(file["matches"], "match", "matches") + ")\n\n"
 
 			results_view = self.window.new_file()
+			results_view.set_name("Element Finder Results")
+			results_view.set_syntax_file("Packages/ElementFinder/Element Finder Results.tmLanguage")
 			edit = results_view.begin_edit()
 			results_view.insert(edit, results_view.size(), output)
+			results_view.end_edit(edit)
 		else:
 			sublime.set_timeout(self.handle_threading, 100)
 
@@ -82,7 +91,7 @@ class CommandLineInterface(threading.Thread):
 
 		if "status" in json_line:
 			if json_line["status"] == "foundMatch":
-				self.files.append(json_line["file"])
+				self.files.append(json_line)
 			elif json_line["status"] == "complete":
 				self.complete = True
 				self.total_matches = json_line["totalMatches"]
