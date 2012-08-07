@@ -1,4 +1,10 @@
 {
-	// Location of NodeJS
-	"node_path" : "/usr/local/bin/node"
+	// Location of NodeJS:
+	"node_path" : "/usr/local/bin/node",
+
+	// Only search files with this extension: 
+	"extension" : "html, htm",
+
+	// Ignore files matching this pattern
+	"ignore" : ".git, .svn"
 }

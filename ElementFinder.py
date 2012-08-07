@@ -31,7 +31,13 @@ class ElementFinderCommand(sublime_plugin.WindowCommand):
 		self.output_view.settings().set("result_file_regex", "^([^ ].*) \([0-9]+ match(?:es)?\)$")
 
 		# Create a thread so that calling the command line app doesn't lock up the interface
-		self.thread = CommandLineInterface(self.paths, selector, sublime.load_settings("elfinder.sublime-settings").get("node_path"))
+		sublime_settings = sublime.load_settings("elfinder.sublime-settings")
+		settings = {
+			"node_path" : sublime_settings.get("node_path"),
+			"extension" : sublime_settings.get("extension"),
+			"ignore" : sublime_settings.get("ignore")
+		}
+		self.thread = CommandLineInterface(self.paths, selector, settings)
 		self.thread.start()
 		self.handle_threading()
 
@@ -76,12 +82,12 @@ class ElementFinderCommand(sublime_plugin.WindowCommand):
 
 class CommandLineInterface(threading.Thread):
 
-	def __init__(self, paths, selector, node):
+	def __init__(self, paths, selector, settings):
 		self.responses = []
 		self.complete = False
 		self.paths = paths
 		self.selector = selector
-		self.node = node
+		self.settings = settings
 		threading.Thread.__init__(self)
 
 	def run(self):
@@ -90,10 +96,12 @@ class CommandLineInterface(threading.Thread):
 		# http://docs.python.org/library/subprocess.html#subprocess.Popen
 		self.sp = subprocess.Popen(
 			[
-				self.node,
+				self.settings["node_path"],
 				sublime.packages_path() + "/ElementFinder/lib/elfinder/element-finder.js",
-				"--json",
-				"--selector", self.selector
+				"--selector", self.selector,
+				"--extension", self.settings["extension"],
+				"--ignore", self.settings["ignore"],
+				"--json"
 			],
 			bufsize = -1,
 			stdout = subprocess.PIPE,
