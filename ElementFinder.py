@@ -25,7 +25,7 @@ class ElementFinderCommand(sublime_plugin.WindowCommand):
 
 		# Create an output buffer
 		self.output_view = self.window.new_file()
-		self.output_view.set_name("Element Finder Results")
+		self.output_view.set_name(selector + " - Element Finder Results")
 		self.output_view.set_scratch(True)
 		self.output_view.set_syntax_file("Packages/ElementFinder/Element Finder Results.tmLanguage")
 		self.output_view.settings().set("result_file_regex", "^([^ ].*) \([0-9]+ match(?:es)?\)$")
@@ -47,19 +47,28 @@ class ElementFinderCommand(sublime_plugin.WindowCommand):
 		self.output_view.end_edit(edit)
 
 	def update_status(self, filesProcessed, totalFiles):
-		self.output_view.set_status('element_finder', 'Element Finder is searching... (%s/%s files)' % (filesProcessed, totalFiles))
+		self.output_view.set_status("element_finder", "Element Finder is searching... (%s/%s files)" % (filesProcessed, totalFiles))
 
 	def handle_threading(self):
 		while (len(self.thread.responses) > 0):
 			json_line = self.thread.responses.pop(0)
 
 			if "status" in json_line:
+
 				if json_line["status"] == "countedFiles":
 					self.update_status(0, json_line["numberOfFiles"])
-					self.print_line(json_line["message"] + "\n\n")
-					self.print_line("Tip: to fold all result summaries, press Command K 1\n\n")
+					message = \
+						"Selector:                  " + json_line["selector"] + "\n" + \
+						"Directory:                 " + json_line["directory"] + "\n" + \
+						"Filetypes to search:       " + json_line["extension"] + "\n" + \
+						"Patterns to ignore:        " + json_line["ignore"] + "\n" + \
+						"Number of files to search: " + str(json_line["numberOfFiles"]) + "\n\n" + \
+						"Tip: to fold all result summaries, press Command K 1\n\n"
+					self.print_line(message)
+
 				elif json_line["status"] == "processingFile":
 					self.update_status(json_line["fileNumber"], json_line["numberOfFiles"])
+
 				elif json_line["status"] == "foundMatch":
 					output = json_line["file"] + " (" + self.pluralise(json_line["matches"], "match", "matches") + ")\n\n"
 					match_number = 1
@@ -69,13 +78,15 @@ class ElementFinderCommand(sublime_plugin.WindowCommand):
 							output += "\n"
 						match_number += 1
 					self.print_line(output)
+
 				elif json_line["status"] == "complete":
-					self.print_line(json_line["message"] + "\n\n")
+					self.print_line(json_line["message"])
+
 				else:
 					print "Status: " + json_line["status"]
 
 		if self.thread.complete == True:
-			self.output_view.erase_status('element_finder')
+			self.output_view.erase_status("element_finder")
 		else:
 			sublime.set_timeout(self.handle_threading, 100)
 

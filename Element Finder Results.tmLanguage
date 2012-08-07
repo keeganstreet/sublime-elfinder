@@ -9,6 +9,52 @@
 	<array>
 		<dict>
 			<key>match</key>
+			<string>^(Selector: |Directory: |Filetypes to search: |Patterns to ignore: )(.*)$</string>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>comment.block</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>string.unquoted</string>
+				</dict>
+			</dict>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>^(Number of files to search: )(.*)$</string>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>comment.block</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>constant.numeric</string>
+				</dict>
+			</dict>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>^([Tip:|Found ](.*))$</string>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>comment.block.documentation</string>
+				</dict>
+			</dict>
+		</dict>
+		<dict>
+			<key>match</key>
 			<string>^([^ ].*) \([0-9]+ match(?:es)?\)$</string>
 			<key>captures</key>
 			<dict>
