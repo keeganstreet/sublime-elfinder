@@ -1,7 +1,11 @@
 [
 	{
+		"caption": "-",
+		"id": "folder_commands"
+	},
+	{
 		"command": "element_finder",
-		"caption": "Find Selector in Files...",
-		"args": {"paths": []}
+		"caption": "Find Elements in Folder...",
+		"args": { "paths": [] }
 	}
 ]

@@ -31,7 +31,7 @@ class ElementFinderCommand(sublime_plugin.WindowCommand):
 		self.output_view.settings().set("result_file_regex", "^([^ ].*) \([0-9]+ match(?:es)?\)$")
 
 		# Create a thread so that calling the command line app doesn't lock up the interface
-		sublime_settings = sublime.load_settings("elfinder.sublime-settings")
+		sublime_settings = sublime.load_settings("Element Finder.sublime-settings")
 		settings = {
 			"node_path" : sublime_settings.get("node_path"),
 			"extension" : sublime_settings.get("extension"),
