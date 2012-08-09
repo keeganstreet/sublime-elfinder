@@ -3,7 +3,7 @@
 	"node_path" : "/usr/local/bin/node",
 
 	// Only search files with this extension: 
-	"extension" : "html, htm",
+	"extension" : "html, htm, xhtml",
 
 	// Ignore files matching this pattern
 	"ignore" : ".git, .svn"
