@@ -5,14 +5,33 @@ import sublime, sublime_plugin, subprocess, threading, json
 
 class ElementFinderCommand(sublime_plugin.WindowCommand):
 
-	# This method is called when the user right-clicks files/folders in the Side Bar and selects "Find Selector in Files"
-	def run(self, paths = []):
+	# This method is called when the user right-clicks folders in the Side Bar and selects "Find Elements in Folder..."
+	def run(self, dirs = []):
 
-		# Save the files/folders that were selected into an array
-		self.paths = paths
+		if len(dirs) == 0:
+			# Search in the current working directory
+			current_file = self.window.active_view().file_name()
+			if current_file == None:
+				return self.invalid_directory()
+			folders_containing_current_file = []
+			# Loop through folders in Side Bar and see which ones contain the current file
+			for folder in self.window.folders():
+				if current_file.find(folder) == 0:
+					folders_containing_current_file.append(folder)
+			if len(folders_containing_current_file) > 0:
+				self.dirs = folders_containing_current_file
+			else:
+				return self.invalid_directory()
+
+		else:
+			# Search in the folders that were selected in the Side Bar
+			self.dirs = dirs
 
 		# Ask the user what CSS Selector they want to search for
-		self.window.show_input_panel("Find CSS Selector:", "", self.on_css_selector_entered, None, None)
+		self.window.show_input_panel("Find elements matching CSS selector:", "", self.on_css_selector_entered, None, None)
+
+	def invalid_directory(self):
+		sublime.error_message("Element Finder doesn't know which directory to search in. Right-click a folder in the Side Bar and select 'Find Elements in Folder...'.")
 
 	def pluralise(self, number, singular, plural):
 		if number == 1:
@@ -37,7 +56,7 @@ class ElementFinderCommand(sublime_plugin.WindowCommand):
 			"extension" : sublime_settings.get("extension"),
 			"ignore" : sublime_settings.get("ignore")
 		}
-		self.thread = CommandLineInterface(self.paths, selector, settings)
+		self.thread = CommandLineInterface(self.dirs, selector, settings)
 		self.thread.start()
 		self.handle_threading()
 
@@ -90,13 +109,17 @@ class ElementFinderCommand(sublime_plugin.WindowCommand):
 		else:
 			sublime.set_timeout(self.handle_threading, 100)
 
+	# Only display in the Side Bar context menu for directories, not files
+	def is_visible(self, dirs):
+		return len(dirs) == 1
+
 
 class CommandLineInterface(threading.Thread):
 
 	def __init__(self, paths, selector, settings):
 		self.responses = []
 		self.complete = False
-		self.paths = paths
+		self.dirs = paths
 		self.selector = selector
 		self.settings = settings
 		threading.Thread.__init__(self)
@@ -118,7 +141,7 @@ class CommandLineInterface(threading.Thread):
 			stdout = subprocess.PIPE,
 			stderr = subprocess.PIPE,
 			stdin = subprocess.PIPE,
-			cwd = self.paths[0])
+			cwd = self.dirs[0])
 
 		# Poll process for new output until finished
 		for line in iter(self.sp.stdout.readline, ""):
