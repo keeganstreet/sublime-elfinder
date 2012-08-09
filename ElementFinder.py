@@ -6,7 +6,7 @@ import sublime, sublime_plugin, subprocess, threading, json
 class ElementFinderCommand(sublime_plugin.WindowCommand):
 
 	# This method is called when the user right-clicks folders in the Side Bar and selects "Find Elements in Folder..."
-	def run(self, dirs = []):
+	def run(self, dirs = [], type = None):
 
 		if len(dirs) == 0:
 			# Search in the current working directory
@@ -110,8 +110,13 @@ class ElementFinderCommand(sublime_plugin.WindowCommand):
 			sublime.set_timeout(self.handle_threading, 100)
 
 	# Only display in the Side Bar context menu for directories, not files
-	def is_visible(self, dirs):
-		return len(dirs) == 1
+	def is_visible(self, dirs, type):
+		if type == "Main":
+			return True
+		elif type == "Side Bar":
+			return len(dirs) == 1
+		else:
+			return True
 
 
 class CommandLineInterface(threading.Thread):

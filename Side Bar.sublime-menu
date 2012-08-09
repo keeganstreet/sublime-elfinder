@@ -6,6 +6,10 @@
 	{
 		"command": "element_finder",
 		"caption": "Find Elements in Folder…",
-		"args": { "dirs": [] }
+		"args":
+		{
+			"dirs": [],
+			"type": "Side Bar"
+		}
 	}
 ]

@@ -1,13 +1,24 @@
 [
 	{
-		"caption": "Preferences",
-		"mnemonic": "n",
+		"id": "find",
+		"children":
+		[
+			{
+				"command": "element_finder",
+				"caption": "Find Elements in Files…",
+				"args":
+				{
+					"dirs" : [],
+					"type": "Main"
+				}
+			}
+		]
+	},
+	{
 		"id": "preferences",
 		"children":
 		[
 			{
-				"caption": "Package Settings",
-				"mnemonic": "P",
 				"id": "package-settings",
 				"children":
 				[
@@ -16,14 +27,16 @@
 						"children":
 						[
 							{
-								"command": "open_file", "args":
+								"command": "open_file",
+								"args":
 								{
 									"file": "${packages}/ElementFinder/Element Finder.sublime-settings"
 								},
 								"caption": "Settings – Default"
 							},
 							{
-								"command": "open_file", "args":
+								"command": "open_file",
+								"args":
 								{
 									"file": "${packages}/User/Element Finder.sublime-settings"
 								},
