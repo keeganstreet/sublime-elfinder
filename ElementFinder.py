@@ -128,28 +128,29 @@ class CommandLineInterface(threading.Thread):
 
 		# Create a Subprocess to call the command line app
 		# http://docs.python.org/library/subprocess.html#subprocess.Popen
-		self.sp = subprocess.Popen(
-			[
-				self.settings["node_path"],
-				sublime.packages_path() + "/ElementFinder/lib/elfinder/element-finder.js",
-				"--selector", self.selector,
-				"--extension", self.settings["extension"],
-				"--ignore", self.settings["ignore"],
-				"--json"
-			],
-			bufsize = -1,
-			stdout = subprocess.PIPE,
-			stderr = subprocess.PIPE,
-			stdin = subprocess.PIPE,
-			cwd = self.dirs[0])
+		try:
+			self.sp = subprocess.Popen(
+				[
+					self.settings["node_path"],
+					sublime.packages_path() + "/ElementFinder/lib/elfinder/element-finder.js",
+					"--selector", self.selector,
+					"--extension", self.settings["extension"],
+					"--ignore", self.settings["ignore"],
+					"--json"
+				],
+				bufsize = -1,
+				stdout = subprocess.PIPE,
+				stderr = subprocess.STDOUT,
+				stdin = subprocess.PIPE,
+				cwd = self.dirs[0])
+
+		except OSError:
+			sublime.error_message("Could not find Node JS at " + self.settings["node_path"] + ". Check your Element Finder preferences.")
+			return
 
 		# Poll process for new output until finished
 		for line in iter(self.sp.stdout.readline, ""):
 			self.processLine(line)
-
-		for err in iter(self.sp.stderr.readline, ""):
-			self.processLine(err)
-			self.sp.terminate()
 
 		self.sp.wait()
 
@@ -162,8 +163,8 @@ class CommandLineInterface(threading.Thread):
 			if (len(line.strip()) > 0):
 				self.sp.terminate()
 				self.complete = True
-				sublime.error_message("Invalid response from elfinder CLI: " + line)
-				return
+				sublime.error_message("Invalid response from Element Finder CLI: " + line)
+			return
 
 		self.responses.append(json_line)
 
