@@ -1,8 +1,5 @@
 import sublime, sublime_plugin, subprocess, threading, json
 
-# Note: this code has been written to run with elfinder v.0.0.2
-# https://github.com/keeganstreet/element-finder
-
 class ElementFinderCommand(sublime_plugin.WindowCommand):
 
 	# This method is called when the user right-clicks folders in the Side Bar and selects "Find Elements in Folder..."
@@ -27,8 +24,14 @@ class ElementFinderCommand(sublime_plugin.WindowCommand):
 			# Search in the folders that were selected in the Side Bar
 			self.dirs = dirs
 
+		# If the user has text selected, use that as search input
+		selections = self.window.active_view().sel()
+		initial_text = ""
+		if len(selections) > 0:
+			initial_text = self.window.active_view().substr(selections[0])
+
 		# Ask the user what CSS Selector they want to search for
-		self.window.show_input_panel("Find elements matching CSS selector:", "", self.on_css_selector_entered, None, None)
+		self.window.show_input_panel("Find elements matching CSS selector:", initial_text, self.on_css_selector_entered, None, None)
 
 	def invalid_directory(self):
 		sublime.error_message("Element Finder doesn't know which directory to search in. Right-click a folder in the Side Bar and select 'Find Elements in Folder...'.")
