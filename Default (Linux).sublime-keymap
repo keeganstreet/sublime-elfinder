@@ -1,11 +1,6 @@
 [
 	{
 		"keys": ["ctrl+alt+e"],
-		"command": "element_finder",
-		"args":
-		{
-			"dirs" : [],
-			"type": "Main"
-		}
+		"command": "element_finder"
 	}
 ]

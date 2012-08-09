@@ -110,10 +110,8 @@ class ElementFinderCommand(sublime_plugin.WindowCommand):
 			sublime.set_timeout(self.handle_threading, 100)
 
 	# Only display in the Side Bar context menu for directories, not files
-	def is_visible(self, dirs, type):
-		if type == "Main":
-			return True
-		elif type == "Side Bar":
+	def is_visible(self = None, dirs = None, type = None):
+		if type == "Side Bar":
 			return len(dirs) == 1
 		else:
 			return True

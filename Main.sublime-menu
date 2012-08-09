@@ -5,12 +5,7 @@
 		[
 			{
 				"command": "element_finder",
-				"caption": "Find Elements in Files…",
-				"args":
-				{
-					"dirs" : [],
-					"type": "Main"
-				}
+				"caption": "Find Elements in Folder…"
 			}
 		]
 	},
