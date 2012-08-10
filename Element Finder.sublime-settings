@@ -1,6 +1,6 @@
 {
 	// Location of NodeJS:
-	"node_path" : "/usr/local/bin/node",
+	"node_path" : "node",
 
 	// Only search files with this extension: 
 	"extension" : "html, htm, xhtml",
