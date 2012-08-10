@@ -144,6 +144,7 @@ class CommandLineInterface(threading.Thread):
 					"--ignore", self.settings["ignore"],
 					"--json"
 				],
+				shell = True,
 				bufsize = -1,
 				stdout = subprocess.PIPE,
 				stderr = subprocess.STDOUT,
