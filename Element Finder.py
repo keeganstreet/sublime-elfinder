@@ -49,7 +49,7 @@ class ElementFinderCommand(sublime_plugin.WindowCommand):
 		self.output_view = self.window.new_file()
 		self.output_view.set_name(selector + " - Element Finder Results")
 		self.output_view.set_scratch(True)
-		self.output_view.set_syntax_file("Packages/ElementFinder/Element Finder Results.tmLanguage")
+		self.output_view.set_syntax_file("Packages/Element Finder/Element Finder Results.tmLanguage")
 		self.output_view.settings().set("result_file_regex", "^([^ ].*) \([0-9]+ match(?:es)?\)$")
 
 		# Create a thread so that calling the command line app doesn't lock up the interface
@@ -138,7 +138,7 @@ class CommandLineInterface(threading.Thread):
 			self.sp = subprocess.Popen(
 				[
 					self.settings["node_path"],
-					sublime.packages_path() + "/ElementFinder/lib/elfinder/element-finder.js",
+					sublime.packages_path() + "/Element Finder/lib/elfinder/element-finder.js",
 					"--selector", self.selector,
 					"--extension", self.settings["extension"],
 					"--ignore", self.settings["ignore"],
