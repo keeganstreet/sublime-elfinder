@@ -13,6 +13,12 @@
 						"version": "0.1.0",
 						"url": "https://nodeload.github.com/keeganstreet/sublime-elfinder/zipball/osx-0.1.0"
 					}
+				],
+				"windows": [
+					{
+						"version": "0.1.0",
+						"url": "https://nodeload.github.com/keeganstreet/sublime-elfinder/zipball/windows-0.1.0"
+					}
 				]
 			}
 		}
