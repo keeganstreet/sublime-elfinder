@@ -1,3 +1,17 @@
 # Element Finder Sublime Text Plugin
 
-This plugin is under development. It is not ready for use. In the meantime, you can use the command line app from https://github.com/keeganstreet/element-finder
+Search through HTML files for elements that match a CSS selector.
+
+## Installation
+
+1. Install [NodeJS](http://nodejs.org/).
+
+2. Install Element Finder through [Package Control](http://wbond.net/sublime_packages/package_control).
+
+You may need to update the location of NodeJS in Sublime Text 2 > Preferences > Package Settings > Element Finder > Settings - User.
+
+## Usage
+
+1. Right-click on a folder in the Side Bar.
+
+2. Enter a CSS selector.
