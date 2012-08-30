@@ -1,0 +1,20 @@
+{
+	"schema_version": "1.2",
+	"packages": [
+		{
+			"name": "Element Finder",
+			"description": "Find in HTML files with CSS selectors",
+			"author": "Keegan Street",
+			"homepage": "https://github.com/keeganstreet/sublime-elfinder",
+			"last_modified": "2012-08-10 20:53:31",
+			"platforms": {
+				"osx": [
+					{
+						"version": "0.1.0",
+						"url": "https://nodeload.github.com/keeganstreet/sublime-elfinder/zipball/osx-0.1.0"
+					}
+				]
+			}
+		}
+	]
+}
