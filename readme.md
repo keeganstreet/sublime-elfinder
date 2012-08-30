@@ -14,4 +14,6 @@ You may need to update the location of NodeJS in Sublime Text 2 > Preferences > 
 
 1. Right-click on a folder in the Side Bar.
 
-2. Enter a CSS selector.
+2. Click "Find Elements in Folder..."
+
+3. Enter a CSS selector and press Enter.
