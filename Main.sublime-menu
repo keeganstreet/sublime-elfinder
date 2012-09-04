@@ -25,7 +25,7 @@
 								"command": "open_file",
 								"args":
 								{
-									"file": "${packages}/ElementFinder/Element Finder.sublime-settings"
+									"file": "${packages}/Element Finder/Element Finder.sublime-settings"
 								},
 								"caption": "Settings – Default"
 							},
