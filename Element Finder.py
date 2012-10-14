@@ -128,6 +128,7 @@ class CommandLineInterface(threading.Thread):
 		self.dirs = paths
 		self.selector = selector
 		self.settings = settings
+		self.errors = ""
 		threading.Thread.__init__(self)
 
 	def run(self):
@@ -160,16 +161,16 @@ class CommandLineInterface(threading.Thread):
 
 		self.sp.wait()
 
+		if (self.errors != ""):
+			sublime.error_message("Invalid response from Element Finder CLI:\n" + self.errors)
+
 	# Process the JSON response from elfinder
 	def processLine(self, line):
 
 		try:
 			json_line = json.loads(line)
 		except ValueError:
-			if (len(line.strip()) > 0):
-				self.sp.terminate()
-				self.complete = True
-				sublime.error_message("Invalid response from Element Finder CLI: " + line)
+			self.errors += line
 			return
 
 		self.responses.append(json_line)
