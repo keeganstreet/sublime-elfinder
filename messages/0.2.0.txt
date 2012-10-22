@@ -1,0 +1,6 @@
+Element Finder
+==============
+
+Thanks for updating Element Finder to version 0.2.0.
+
+Element Finder has changed engines, from JSDom to Cheerio. Cheerio is light-weight and better suited to finding elements, meaning Element Finder is now much faster.
