@@ -5,16 +5,23 @@ class ElementFinderCommand(sublime_plugin.WindowCommand):
 	# This method is called when the user right-clicks folders in the Side Bar and selects "Find Elements in Folder..."
 	def run(self, dirs = [], type = None):
 
+		active_view = self.window.active_view()
+
 		if len(dirs) == 0:
 			# Search in the current working directory
-			current_file = self.window.active_view().file_name()
+			if active_view == None:
+				return self.invalid_directory()
+
+			current_file = active_view.file_name()
 			if current_file == None:
 				return self.invalid_directory()
-			folders_containing_current_file = []
+
 			# Loop through folders in Side Bar and see which ones contain the current file
+			folders_containing_current_file = []
 			for folder in self.window.folders():
 				if current_file.find(folder) == 0:
 					folders_containing_current_file.append(folder)
+
 			if len(folders_containing_current_file) > 0:
 				self.dirs = folders_containing_current_file
 			else:
@@ -25,10 +32,11 @@ class ElementFinderCommand(sublime_plugin.WindowCommand):
 			self.dirs = dirs
 
 		# If the user has text selected, use that as search input
-		selections = self.window.active_view().sel()
 		initial_text = ""
-		if len(selections) > 0:
-			initial_text = self.window.active_view().substr(selections[0])
+		if active_view != None:
+			selections = active_view.sel()
+			if len(selections) > 0:
+				initial_text = active_view.substr(selections[0])
 
 		# Ask the user what CSS Selector they want to search for
 		self.window.show_input_panel("Find elements matching CSS selector:", initial_text, self.on_css_selector_entered, None, None)
@@ -139,7 +147,7 @@ class CommandLineInterface(threading.Thread):
 			self.sp = subprocess.Popen(
 				[
 					self.settings["node_path"],
-					sublime.packages_path() + "/Element Finder/lib/elfinder/element-finder.js",
+					sublime.packages_path() + "/Element Finder/lib/submodule-elfinder/element-finder.js",
 					"--selector", self.selector,
 					"--extension", self.settings["extension"],
 					"--ignore", self.settings["ignore"],

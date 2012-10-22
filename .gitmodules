@@ -1,0 +1,3 @@
+[submodule "lib/submodule-elfinder"]
+	path = lib/submodule-elfinder
+	url = https://github.com/keeganstreet/element-finder
