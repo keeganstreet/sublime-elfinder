@@ -147,7 +147,7 @@ class CommandLineInterface(threading.Thread):
 			self.sp = subprocess.Popen(
 				[
 					self.settings["node_path"],
-					sublime.packages_path() + "/Element Finder/lib/submodule-elfinder/element-finder.js",
+					sublime.packages_path() + "/Element Finder/lib/elfinder/element-finder.js",
 					"--selector", self.selector,
 					"--extension", self.settings["extension"],
 					"--ignore", self.settings["ignore"],

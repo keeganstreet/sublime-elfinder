@@ -1,0 +1,4 @@
+node_modules
+tests/data/*
+!tests/data/.keep
+npm-debug.log
