@@ -59,6 +59,7 @@ class ElementFinderCommand(sublime_plugin.WindowCommand):
 		self.output_view.set_scratch(True)
 		self.output_view.set_syntax_file("Packages/Element Finder/Element Finder Results.tmLanguage")
 		self.output_view.settings().set("result_file_regex", "^([^ ].*) \([0-9]+ match(?:es)?\)$")
+		self.output_view.settings().set("result_line_regex", "^ +([0-9]+): ")
 
 		# Create a thread so that calling the command line app doesn't lock up the interface
 		sublime_settings = sublime.load_settings("Element Finder.sublime-settings")
@@ -103,7 +104,7 @@ class ElementFinderCommand(sublime_plugin.WindowCommand):
 					output = json_line["file"] + " (" + self.pluralise(json_line["matches"], "match", "matches") + ")\n\n"
 					match_number = 1
 					for match_detail in json_line["matchesDetails"]:
-						output += "    " + str(match_number).ljust(4, " ") + match_detail.replace("\n", "\n        ") + "\n"
+						output += "    " + (str(match_detail["line"]) + ":").ljust(8, " ") + match_detail["html"].replace("\n", "\n        ") + "\n"
 						if (match_number == json_line["matches"]):
 							output += "\n"
 						match_number += 1

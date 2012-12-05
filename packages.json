@@ -6,24 +6,36 @@
 			"description": "Find in HTML files with CSS selectors",
 			"author": "Keegan Street",
 			"homepage": "https://github.com/keeganstreet/sublime-elfinder",
-			"last_modified": "2012-10-22 20:30:00",
+			"last_modified": "2012-12-05 20:30:00",
 			"platforms": {
 				"osx": [
 					{
 						"version": "0.2.0",
 						"url": "https://nodeload.github.com/keeganstreet/sublime-elfinder/zipball/osx-0.2.0"
+					},
+					{
+						"version": "0.3.0",
+						"url": "https://nodeload.github.com/keeganstreet/sublime-elfinder/zipball/osx-0.3.0"
 					}
 				],
 				"linux": [
 					{
 						"version": "0.2.0",
 						"url": "https://nodeload.github.com/keeganstreet/sublime-elfinder/zipball/osx-0.2.0"
+					},
+					{
+						"version": "0.3.0",
+						"url": "https://nodeload.github.com/keeganstreet/sublime-elfinder/zipball/osx-0.3.0"
 					}
 				],
 				"windows": [
 					{
 						"version": "0.2.0",
 						"url": "https://nodeload.github.com/keeganstreet/sublime-elfinder/zipball/windows-0.2.0"
+					},
+					{
+						"version": "0.3.0",
+						"url": "https://nodeload.github.com/keeganstreet/sublime-elfinder/zipball/windows-0.3.0"
 					}
 				]
 			}
