@@ -1,0 +1,3 @@
+Thanks for updating Element Finder to version 0.3.1.
+
+Three new optional settings have been added: node_path_osx, node_path_windows and node_path_linux. This will enable you to sync Element Finder across multiple computers using Dropbox and have different Node paths on each platform.
