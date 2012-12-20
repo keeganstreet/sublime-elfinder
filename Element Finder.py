@@ -163,6 +163,7 @@ class CommandLineInterface(threading.Thread):
 					"--ignore", self.settings["ignore"],
 					"--json"
 				],
+				shell = (sublime.platform() == "windows"),
 				bufsize = -1,
 				stdout = subprocess.PIPE,
 				stderr = subprocess.STDOUT,
