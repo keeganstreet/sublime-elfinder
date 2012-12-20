@@ -2,6 +2,15 @@
 	// Location of NodeJS:
 	"node_path" : "node",
 
+	// Override node_path on Mac OSX
+	// "node_path_osx" : "/usr/local/bin/node",
+
+	// Override node_path on Windows
+	// "node_path_windows" : "node",
+
+	// Override node_path on Linux
+	// "node_path_linux" : "/usr/local/bin/node",
+
 	// Only search files with this extension: 
 	"extension" : "html, htm, xhtml",
 
