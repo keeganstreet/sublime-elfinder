@@ -68,6 +68,15 @@ class ElementFinderCommand(sublime_plugin.WindowCommand):
 			"extension" : sublime_settings.get("extension"),
 			"ignore" : sublime_settings.get("ignore")
 		}
+
+		# Let the user declare different Node paths for each OS, in case they sync the plugin across multiple computers
+		if (sublime.platform() == "osx" and sublime_settings.get("node_path_osx") != None):
+			settings["node_path"] = sublime_settings.get("node_path_osx")
+		elif (sublime.platform() == "windows" and sublime_settings.get("node_path_windows") != None):
+			settings["node_path"] = sublime_settings.get("node_path_windows")
+		elif (sublime.platform() == "linux" and sublime_settings.get("node_path_linux") != None):
+			settings["node_path"] = sublime_settings.get("node_path_linux")
+
 		self.thread = CommandLineInterface(self.dirs, selector, settings)
 		self.thread.start()
 		self.handle_threading()
