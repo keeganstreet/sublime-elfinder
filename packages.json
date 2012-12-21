@@ -10,8 +10,8 @@
 			"platforms": {
 				"osx": [
 					{
-						"version": "0.3.1",
-						"url": "https://nodeload.github.com/keeganstreet/sublime-elfinder/zipball/osx-0.3.1"
+						"version": "0.3.2",
+						"url": "https://nodeload.github.com/keeganstreet/sublime-elfinder/zipball/osx-0.3.2"
 					},
 					{
 						"version": "0.3.0",
@@ -24,8 +24,8 @@
 				],
 				"linux": [
 					{
-						"version": "0.3.1",
-						"url": "https://nodeload.github.com/keeganstreet/sublime-elfinder/zipball/osx-0.3.1"
+						"version": "0.3.2",
+						"url": "https://nodeload.github.com/keeganstreet/sublime-elfinder/zipball/osx-0.3.2"
 					},
 					{
 						"version": "0.3.0",
@@ -38,8 +38,8 @@
 				],
 				"windows": [
 					{
-						"version": "0.3.1",
-						"url": "https://nodeload.github.com/keeganstreet/sublime-elfinder/zipball/windows-0.3.1"
+						"version": "0.3.2",
+						"url": "https://nodeload.github.com/keeganstreet/sublime-elfinder/zipball/windows-0.3.2"
 					},
 					{
 						"version": "0.3.0",
