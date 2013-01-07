@@ -1,0 +1,4 @@
+Thanks for updating Element Finder to version 0.3.3.
+
+This release resolves the following defect:
+- https://github.com/keeganstreet/sublime-elfinder/issues/3
