@@ -167,7 +167,8 @@ class CommandLineInterface(threading.Thread):
 				bufsize = -1,
 				stdout = subprocess.PIPE,
 				stderr = subprocess.STDOUT,
-				stdin = subprocess.PIPE)
+				stdin = subprocess.PIPE,
+				cwd = self.dirs[0])
 
 		except OSError:
 			sublime.error_message("Could not find Node JS at " + self.settings["node_path"] + ". Check your Element Finder preferences.")
