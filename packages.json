@@ -11,43 +11,43 @@
 				"osx": [
 					{
 						"version": "0.3.3",
-						"url": "https://nodeload.github.com/keeganstreet/sublime-elfinder/zipball/osx-0.3.3"
+						"url": "https://github.com/keeganstreet/sublime-elfinder/zipball/osx-0.3.3"
 					},
 					{
 						"version": "0.3.0",
-						"url": "https://nodeload.github.com/keeganstreet/sublime-elfinder/zipball/osx-0.3.0"
+						"url": "https://github.com/keeganstreet/sublime-elfinder/zipball/osx-0.3.0"
 					},
 					{
 						"version": "0.2.0",
-						"url": "https://nodeload.github.com/keeganstreet/sublime-elfinder/zipball/osx-0.2.0"
+						"url": "https://github.com/keeganstreet/sublime-elfinder/zipball/osx-0.2.0"
 					}
 				],
 				"linux": [
 					{
 						"version": "0.3.3",
-						"url": "https://nodeload.github.com/keeganstreet/sublime-elfinder/zipball/osx-0.3.3"
+						"url": "https://github.com/keeganstreet/sublime-elfinder/zipball/osx-0.3.3"
 					},
 					{
 						"version": "0.3.0",
-						"url": "https://nodeload.github.com/keeganstreet/sublime-elfinder/zipball/osx-0.3.0"
+						"url": "https://github.com/keeganstreet/sublime-elfinder/zipball/osx-0.3.0"
 					},
 					{
 						"version": "0.2.0",
-						"url": "https://nodeload.github.com/keeganstreet/sublime-elfinder/zipball/osx-0.2.0"
+						"url": "https://github.com/keeganstreet/sublime-elfinder/zipball/osx-0.2.0"
 					}
 				],
 				"windows": [
 					{
 						"version": "0.3.3",
-						"url": "https://nodeload.github.com/keeganstreet/sublime-elfinder/zipball/windows-0.3.3"
+						"url": "https://github.com/keeganstreet/sublime-elfinder/zipball/windows-0.3.3"
 					},
 					{
 						"version": "0.3.0",
-						"url": "https://nodeload.github.com/keeganstreet/sublime-elfinder/zipball/windows-0.3.0"
+						"url": "https://github.com/keeganstreet/sublime-elfinder/zipball/windows-0.3.0"
 					},
 					{
 						"version": "0.2.0",
-						"url": "https://nodeload.github.com/keeganstreet/sublime-elfinder/zipball/windows-0.2.0"
+						"url": "https://github.com/keeganstreet/sublime-elfinder/zipball/windows-0.2.0"
 					}
 				]
 			}
