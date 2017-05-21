@@ -1,5 +1,7 @@
 # Element Finder Sublime Text Plugin
 
+This repository is now maintained by [thinkv](https://github.com/thinkv). If you're looking for updated code, please [click here](https://github.com/thinkv/sublime-elfinder)
+
 Search through HTML files for elements that match a CSS selector.
 
 ## Installation
